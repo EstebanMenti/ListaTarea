@@ -47,3 +47,6 @@ en el proceso.
 ● Recuerden poder aprovechar e incorporar el máximo de contenido adquirido en el
 curso, no sera motivo de rechazo no usar todo, pero a major y mejores
 implementaciones se le sumara mas puntaje.-
+
+
+docker exec -i -t 80d760f73633 /bin/bash
