@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>LISTADO DE TAREAS</h1>
+        
+    
+
+
+        <table style="width: 50%; text-align: left"; class="table table-striped" >
+            <thead>
+                <th>NOMBRE</th>
+                <th>ESTADO</th>
+                <th>COMENTARIO</th>
+                <th>CREADO</th>
+                <th>DETALLE</th>
+                <th>BORRAR</th>
+                <th>USER</th>
+            </thead>
+    
+            {% for item in tareas %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.comentarios }}</td>
+                <td>{{ item.date_create }}</td>
+                <td><a href="/tareas/{{item.id}}/">DETALLE</a></td>
+                <td><a href="/tareas/clear/{{item.id}}/">BORRAR</a></td>
+                <td>{{ item.usuario }}</td>
+            </tr>
+            {% endfor %}
+            
+        </table>
+
+        <br>
+    <br>
+    <form method='POST' action='.'>
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <button>Nuevo</button>
+    </form>
+
+    </body>
+
+</html>
