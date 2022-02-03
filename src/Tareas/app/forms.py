@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Usuarios, Tareas
+from .models import Tareas
+
 
 class TareasForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -10,10 +11,11 @@ class TareasForm(ModelForm):
         for dic in self.fields.keys():
             self.fields[ dic ].widget.attrs.update({'class':'form-control'})
 
-        #self.fields[ 'curso' ].widget.attrs.update({'class':'form-select'})
+        #self.fields[ 'user_id' ].widget.attrs.update({'class':'form-HiddenInput'})
         #self.fields[ 'status' ].widget.attrs.update({'class':'form-select'})
 
                 
     class Meta:
         model = Tareas
-        fields = ['name', 'status', 'comentarios','date_expiration']
+        exclude = ['user_id']
+  

@@ -1,45 +1,46 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <h1>LISTADO DE TAREAS</h1>
-        
+{% extends 'base.html' %}
+
+{% block title %}
+    LISTADO DE TAREAS {{ request.user.username }}
+{% endblock %}
+
+
+
+{{ request.user.username }}
+
+{% block col_a %}
+    <table style="width: 50%; text-align: left"; class="table table-striped" >
+        <thead>
+            <th>NOMBRE</th>
+            <th>ESTADO</th>
+            <th>DESCRIPCION</th>
+            <th>CREADO</th>
+            <th>DETALLE</th>
+            <th>BORRAR</th>
+        </thead>
+
+        {% for item in tareas %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>{{ item.date_create }}</td>
+            <td><a href="/tareas/{{item.id}}/">DETALLE</a></td>
+            <td><a href="/tareas/clear/{{item.id}}/">BORRAR</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
     
-
-
-        <table style="width: 50%; text-align: left"; class="table table-striped" >
-            <thead>
-                <th>NOMBRE</th>
-                <th>ESTADO</th>
-                <th>COMENTARIO</th>
-                <th>CREADO</th>
-                <th>DETALLE</th>
-                <th>BORRAR</th>
-                <th>USER</th>
-            </thead>
-    
-            {% for item in tareas %}
-            <tr>
-                <td>{{ item.name }}</td>
-                <td>{{ item.status }}</td>
-                <td>{{ item.comentarios }}</td>
-                <td>{{ item.date_create }}</td>
-                <td><a href="/tareas/{{item.id}}/">DETALLE</a></td>
-                <td><a href="/tareas/clear/{{item.id}}/">BORRAR</a></td>
-                <td>{{ item.usuario }}</td>
-            </tr>
-            {% endfor %}
-            
-        </table>
-
-        <br>
-    <br>
+{% block col_b %}
     <form method='POST' action='.'>
         {% csrf_token %}
         {{ form }}
+       
         <br>
-        <button>Nuevo</button>
+        <button type='submit', class="btn btn-primary" style="margin-bottom: 10px; border-radius: 10px">AGREGAR</button>
     </form>
 
-    </body>
+ {% endblock %}
 
 </html>

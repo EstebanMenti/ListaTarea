@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <h1>DETALLE DE TAREAS</h1>
+{% extends 'base.html' %}
 
-        
-        
-    </body>
-    
-    <br>
-    <br>
+{% block title %}
+    DETALLE DE TAREAS
+{% endblock %}
+
+
+{% block col_a %}
+    <p>NOMBRE: {{ tarea.name }}</p>
+    <p>ESTADO: {{ tarea.status }}</p>
+    <p>DESCRIPCION: {{ tarea.descripcion }}</p>
+    <p>COMENTARIO: {{ tarea.comentarios }}</p>
+    <p>CREADA: {{ form.instance.date_create }}</p>
+    <p>EXPIRA: {{ form.instance.date_expiration }}</p>
+    <p>MODIFICADA: {{ form.instance.date_update }}</p>
+    <p>ITEM: {{ item }}</p>
+    <p>USER_ID: {{ tarea.user_id }}</p>
+{% endblock %}
+
+
+{% block col_b %}
+
     <form method="POST" action="">
         {% csrf_token %}
         {{ form }}
         <br>
-        <br>
         <button type='submit', class="btn btn-primary" style="margin-bottom: 10px; border-radius: 10px">ACTUALIZAR</button>
     </form>
 
-    <br>
-    <br>
-
-
-    <p>NOMBRE: {{ tarea.name }}</p>
-    <p>DETALLE: {{ tarea.comentarios }}</p>
-    <p>ESTADO: {{ tarea.status }}</p>
-    <p>CREADA: {{ form.instance.date_create }}</p>
-    <p>EXPIRA: {{ form.instance.date_expiration }}</p>
-
-    <p>ITEM: {{ item }}</p>
-    <br>
-    <br>
-    <button type='submit', class="btn btn-primary" style="margin-bottom: 10px; border-radius: 10px" onclick="location.href='/tareas/'">Atras</button>
-    <br>
-    <br>
-    <a href="/tareas/">REGRESAR</a>
-
+{% endblock %}
     
-</html>
