@@ -1,8 +1,11 @@
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
+from django.utils import timezone
 
 import datetime
 
@@ -10,6 +13,37 @@ from .forms import TareasForm
 from .models import Tareas
 
 # Create your views here.
+class tarealistView(ListView):
+    model = Tareas
+
+    def get_queryset(self):
+        queryset = Tareas.objects.filter( user_id__icontains = self.request.user.id )
+        name = self.request.GET.get('name', '-')
+        if name != '-':
+            queryset = Tareas.objects.filter(
+                name__icontains=name, user_id__icontains=self.request.user.id )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get('name', '-')
+        if name != '-':
+            context['search_text'] = name
+        
+        form = TareasForm()
+        context['form'] = form
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        
+        new_tarea = Tareas(user_id = self.request.user.id)
+        form = TareasForm( self.request.POST, instance = new_tarea)
+        if( form.is_valid() ):
+            form.save()
+        return redirect('/tareas')
+
+
+
 @login_required
 def get_tareas(request): 
     tareas = Tareas.objects.filter( user_id = request.user.id )

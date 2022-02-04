@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    DETALLE DE TAREAS
+    DETALLE DE TAREAS de {{ request.user.username }}
 {% endblock %}
 
 
 {% block col_a %}
     <p>NOMBRE: {{ tarea.name }}</p>
-    <p>ESTADO: {{ tarea.status }}</p>
+    <p>ESTADO: {{ tarea.get_status_display }}</p>
     <p>DESCRIPCION: {{ tarea.descripcion }}</p>
     <p>COMENTARIO: {{ tarea.comentarios }}</p>
-    <p>CREADA: {{ form.instance.date_create }}</p>
-    <p>EXPIRA: {{ form.instance.date_expiration }}</p>
-    <p>MODIFICADA: {{ form.instance.date_update }}</p>
+    <p>CREADA: {{ form.instance.date_create|date  }}</p>
+    <p>EXPIRA: {{ form.instance.date_expiration|date  }}</p>
+    <p>MODIFICADA: {{ form.instance.date_update|date  }}</p>
     <p>ITEM: {{ item }}</p>
     <p>USER_ID: {{ tarea.user_id }}</p>
 {% endblock %}
