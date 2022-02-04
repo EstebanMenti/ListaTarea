@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    DETALLE DE TAREAS de {{ request.user.username }}
+{% endblock %}
+
+
+{% block col_a %}
+    <p>NOMBRE: {{ tarea.name }}</p>
+    <p>ESTADO: {{ tarea.get_status_display }}</p>
+    <p>DESCRIPCION: {{ tarea.descripcion }}</p>
+    <p>COMENTARIO: {{ tarea.comentarios }}</p>
+    <p>CREADA: {{ form.instance.date_create|date:'d-m-y'  }}</p>
+    <p>EXPIRA: {{ form.instance.date_expiration|date:'d-m-y'  }}</p>
+    <p>MODIFICADA: {{ form.instance.date_update|date:'d-m-y'  }}</p>
+{% endblock %}
+
+
+{% block col_b %}
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <button type='submit', class="btn btn-primary" style="margin-bottom: 10px; border-radius: 10px">ACTUALIZAR</button>
+    </form>
+
+{% endblock %}
+    

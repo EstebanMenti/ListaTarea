@@ -1,0 +1,63 @@
+{% extends 'base.html'%}
+
+{% block title  %} LISTA DE TAREAS de {{ request.user.username }}{% endblock%}
+
+{% block col_a %}
+    <form method="GET" method=".">
+        <div class="col-span-6 sm:col-span-3 mb-6">
+            <label for="first-name" class="text-sm font-medium text-gray-700">Buscar</label>
+            <input type="text" name="name" value="{{ search_text }}" class="focus:ring-gray-500 focus:border-gray-500 shadow-sm sm:text-sm border-gray-400 rounded-md">
+            <button type='submit', class="btn btn-primary" style="margin-bottom: 10px; border-radius: 10px">Buscar</button>
+        </div>
+    </form>
+
+    <table style="width: 50%; text-align: left"; class="table table-striped" >
+        <thead>
+            <th>NOMBRE</th>
+            <th>ESTADO</th>
+            <th>DESCRIPCION</th>
+            <th>CREADO       </th>
+            <th>VENCIMIENTO</th>
+            <th>DETALLE</th>
+            <th>BORRAR</th>
+        </thead>
+
+        {% for item in object_list %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.get_status_display}}</td>
+            <td>{{ item.descripcion }}</td>
+            <td>{{ item.date_create|date:'d-m-y'}}</td>
+            <td><a> 
+            <script type="text/javascript"> 
+                var date_actual = "{{datetime|date:'d-m-y'}}";
+                var date_vencimeinto = "{{item.date_expiration|date:'d-m-y'}}";
+  
+                var date1 = new Date(date_actual.toString());
+                var date2 = new Date(date_vencimeinto.toString());
+
+                if(date1 < date2)
+                {
+                    document.write( date_vencimeinto.toString().italics().bold() );
+                }
+                else
+                    document.write( date_vencimeinto.toString() );
+                
+            </script>
+            </a></td>
+            <td><a href="/tareas/{{item.id}}/">DETALLE</a></td>
+            <td><a href="/tareas/clear/{{item.id}}/">BORRAR</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+
+{% block col_b %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <button type='submit', class="btn btn-primary" style="margin-bottom: 10px; border-radius: 10px">AGREGAR</button>
+    </form>
+{% endblock%}
