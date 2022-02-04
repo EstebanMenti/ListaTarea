@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.utils import timezone
+from datetime import datetime
 
 import datetime
 
@@ -32,6 +33,7 @@ class tarealistView(ListView):
         
         form = TareasForm()
         context['form'] = form
+        context['datetime'] = datetime.datetime.now()
         return context
     
     def post(self, request, *args, **kwargs):

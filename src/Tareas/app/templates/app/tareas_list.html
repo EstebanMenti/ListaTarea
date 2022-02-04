@@ -16,7 +16,8 @@
             <th>NOMBRE</th>
             <th>ESTADO</th>
             <th>DESCRIPCION</th>
-            <th>CREADO</th>
+            <th>CREADO       </th>
+            <th>VENCIMIENTO</th>
             <th>DETALLE</th>
             <th>BORRAR</th>
         </thead>
@@ -26,7 +27,24 @@
             <td>{{ item.name }}</td>
             <td>{{ item.get_status_display}}</td>
             <td>{{ item.descripcion }}</td>
-            <td>{{ item.date_create|date }}</td>
+            <td>{{ item.date_create|date:'d-m-y'}}</td>
+            <td><a> 
+            <script type="text/javascript"> 
+                var date_actual = "{{datetime|date:'d-m-y'}}";
+                var date_vencimeinto = "{{item.date_expiration|date:'d-m-y'}}";
+  
+                var date1 = new Date(date_actual.toString());
+                var date2 = new Date(date_vencimeinto.toString());
+
+                if(date1 < date2)
+                {
+                    document.write( date_vencimeinto.toString().italics().bold() );
+                }
+                else
+                    document.write( date_vencimeinto.toString() );
+                
+            </script>
+            </a></td>
             <td><a href="/tareas/{{item.id}}/">DETALLE</a></td>
             <td><a href="/tareas/clear/{{item.id}}/">BORRAR</a></td>
         </tr>
